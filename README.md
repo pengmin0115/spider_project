@@ -1,7 +1,8 @@
 # spider_project
 
-# 缺少1个配置文件application.yml; 根据自己实际情况配置数据库即可;
----
+### 配置文件
+缺少1个配置文件application.yml; 根据自己实际情况配置数据库即可;
+```
 server:
   port: 30001
 spring:
@@ -12,4 +13,4 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   application:
     name: spider_project
----
+```<bash>
