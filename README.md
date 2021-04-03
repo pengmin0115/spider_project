@@ -13,4 +13,4 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   application:
     name: spider_project
-```<bash>
+```
