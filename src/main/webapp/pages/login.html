@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<title>维克多信息科技有限公司</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<link rel="stylesheet" href="css/gloable.css">
+	<body>
+		<div id="app">
+			<form id="form" v-model="form" method="post" action="/">
+				<div>
+					<img :src="logo" class="logo">
+				</div>
+				<div class="d1">
+					<div class="d2">
+						企业号<br/>
+						<input type="text" name="companynum" value="" :bind="form.compnaynum" placeholder="请输入企业号">
+					</div>
+					<div class="d2">
+						账号<br/>
+						<input type="text" name="username" value="" :bind="form.username" placeholder="请输入账号">
+					</div>
+					<div class="d2">
+						密码<br/>
+						<input type="password" name="password" value="" :bind="form.password" placeholder="请输入密码">
+					</div>
+					<div class="d2">
+						<a href="/">
+							<span style="color: blue;">忘记密码?</span>
+						</a>
+					</div>
+					<div class="d2">
+						<button type="submit" on-click="login" style="color: white;">登&nbsp;&nbsp;录</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+	
+	
+	<script>
+		var vue = new Vue({
+			el: '#app',
+			data() {
+				return {
+					form: {},
+					logo: "./icon/google.png"
+				}
+			},
+			methods:{
+				login() {
+					console.log(this.form)
+					axios.post("http://localhost:3001",this.form).then(res=>{
+						if (res.data.code === '200') {
+							
+						}
+					})
+				}
+			}
+		})
+	</script>
+	<style>
+		input {
+			width: 70%;
+			border-radius: 5px;
+			border: #CBCBCB solid;
+			border-width: 1px;
+			padding: 8px;
+			margin-top: 10px;
+			display: inline-block;
+		}
+		.d1 {
+			width: 80%;
+			height: auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			margin: 10px;
+			border-radius: 10px;
+			background-color: white;
+			display: inline-block;
+		}
+		.d2 {
+			position: relative;
+			left: 10%;
+			margin-top: 1rem;
+		}
+		button{
+			position: relative;
+			bottom: 1.5rem;
+			margin-top: 2.5rem;
+			display: inline-block;
+			border-radius: 0.5rem;
+			border: none;
+			background-color: rgb(24, 144, 255, 0.89);
+			height: 3rem;
+			padding: 8px;
+			width: 75%;
+		}
+		.logo{
+			width: 8rem;
+			height: 8rem; 
+			position: absolute;
+			left: 50%;
+			top: 20%;
+			transform: translate(-50%,-40%);
+		}
+		a {
+			text-decoration: none;			
+		}
+	</style>
+</html>

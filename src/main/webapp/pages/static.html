@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>数据统计</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<link rel="stylesheet" href="css/gloable.css">
+	</head>
+	<body>
+		<h1>统计数据界面</h1>
+		<footer>
+			<li>
+				<a href="orderlist.html">
+					<img src="./icon/order.png" style="height:1.5rem; text-align: center; vertical-align: middle; display: block; margin:auto;">
+					<div style="margin-top: 1rem;">
+						<span >订单列表</span>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="static.html">
+					<img src="./icon/data_active.png.png" style="height:1.5rem; text-align: center; vertical-align: middle; display: block; margin:auto;">
+					<div style="margin-top: 1rem;color: darkblue;font-weight: bold">
+						<span>数据统计</span>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a href="config.html">
+					<img src="./icon/my.png" style="height:1.5rem; text-align: center; vertical-align: middle; display: block; margin:auto;">
+					<div style="margin-top: 1rem;">
+						<span>我的</span>
+					</div>
+				</a>
+			</li>
+		</footer>
+		
+		
+		<style>
+			.div{
+				border-radius: 10px;
+				margin-top: 10px;
+				margin-left: 0.25rem;
+			}
+			#header {
+				width: 100%;
+				height: 100%;
+				padding: 10px;
+				background-color: rgb(61, 185, 234);
+				display: inline-block;
+			}
+			#picture {
+				width: 100%;
+				height: 5%;
+				display: inline-block;
+				float: left;
+				margin-top: 0.05rem;
+			}
+			footer{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				height: 5rem;
+				background-color: rgb(255,255,255);
+				border: lightgray solid;
+				border-width: thin;
+			}
+			input{
+				border-radius: 4px;
+				border: #CBCBCB solid;
+				border-width: 1px;
+				padding: 6px;
+				margin-top: 10px;
+				display: inline-block;
+				text-align: left; 
+			}
+			select{
+				border-radius: 4px;
+				border: #CBCBCB solid;
+				border-width: 1px;
+				padding: 6px;
+				margin-top: 10px;
+				display: inline-block;
+				text-align: left; 
+			}
+			button{
+				height: 30px;
+				left: 10%;
+				display: inline-block;
+				border-radius: 5px;
+				border: darkgray solid;
+				border-width: 1px;
+				background-color: rgb(255, 255, 255);
+				width: 10rem;
+				padding: 5px;
+			}
+			li{
+				display: inline-block;
+				float: left;
+				width: 33%;
+				margin-top: 0.8rem;
+				/* border-right: 1px solid #bbb; */
+			}
+			li:last-child{
+				border-right: none;
+			}
+			a{
+				text-decoration: none;
+				width: 100%;
+				display: block;
+				color: black;
+				text-align: center;
+				margin: 0;
+			}
+			table {
+			    border-collapse: collapse;
+			    border-spacing: 0;
+				table-layout: automatic;
+			}
+			td,th {
+			    padding: 0;
+				text-align: center;
+				vertical-align: middle;
+			}
+			.pure-table {
+			    border-collapse: collapse;
+			    border-spacing: 0;
+			    empty-cells: show;
+			    border: 1px solid #cbcbcb;
+			}
+			.pure-table caption {
+			    color: #000;
+			    font: italic 85%/1 arial,sans-serif;
+			    padding: 0.4em 0;
+			    text-align: center;
+			}
+			.pure-table td,.pure-table th {
+			    border-left: 1px solid #cbcbcb;
+			    border-width: 0 0 0 1px;
+			    font-size: inherit;
+			    margin: 0;
+			    overflow: visible;
+			    padding: .4em 1em;
+			}
+			.pure-table thead {
+			    background-color: #e0e0e0;
+			    color: #000;
+			    text-align: left;
+			    vertical-align: bottom;
+			}
+			.pure-table td {
+			    background-color: transparent;
+			}
+			.pure-table-bordered td {
+			    border-bottom: 1px solid #cbcbcb;
+			}
+			.pure-table-bordered tbody>tr:last-child>td {
+			    border-bottom-width: 0;
+			}
+		</style>
+	</body>
+</html>

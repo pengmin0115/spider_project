@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS forEach用法</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app" @click="findIndex">点击开始遍历</div>
+<script>
+  var vue = new Vue({
+      el:'#app',
+      data(){
+          return{
+            list:[
+                {"name":"小李","age":18},
+                {"name":"小彭","age":21}
+            ]
+          }
+      },
+      methods: {
+          loop(){
+              // forEach遍历数组;
+              this.list.forEach((item, index, array) => {
+                  if (item["name"] === '小李') {
+                      console.log("小李的年龄是:" +item["age"])
+                  }
+              })
+          },
+          findIndex(){
+              // findIndex的方法即找出符合条件的元素的索引值;
+              console.log(this.list.findIndex((item) => item["name"] === '小李'));
+          }
+      }
+  })
+</script>
+</body>
+</html>
