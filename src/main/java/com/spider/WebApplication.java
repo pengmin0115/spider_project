@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/3/28 21:40
  */
 @SpringBootApplication
-@MapperScan({"com.huawei.dao"})
+@MapperScan({"com.spider.dao"})
 public class WebApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class,args);
