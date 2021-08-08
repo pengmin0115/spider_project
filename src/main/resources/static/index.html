@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mail Page For MS Huang</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+  <style>
+    body {
+      background-color: rgba(0, 0, 0, 0.6);
+      width: 60%;
+      margin: 0px auto;
+      vertical-align: center;
+    }
+
+    .body {
+      background-color: white;
+      border-radius: 5px;
+      width: 100%;
+      margin: auto 0px;
+    }
+
+    .content {
+      font-family: Consolas Serif;
+      font-size: 12px;
+      padding: 10px;
+    }
+  </style>
+
+
+</head>
+<body>
+<div id="app">
+  <div class="body">
+    <div class="content">
+      <p> &nbsp;&nbsp;增加邮件内容</p>
+      <el-form ref="form" :model="form" label-width="60px" v-loading="loading">
+        <el-form-item label="标题:">
+          <el-input v-model="form.subtitle" placeholder="请输入标题"></el-input>
+        </el-form-item>
+        <el-form-item label="内容:" required="true">
+          <el-input v-model="form.content" placeholder="请输入要添加的邮件内容" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" size="mini" @click="submit()">submit</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+</div>
+
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data() {
+            return {
+                loading: false,
+                form: {}
+            }
+        },
+        methods: {
+            submit() {
+                if (this.form.content == "" || this.form.content == null || this.form.content == undefined) {
+                    this.$message.warning("请输入邮件内容!")
+                    return;
+                }
+                this.loading = true
+                axios.post("http://localhost:13000/mail/upload",this.form).then(res => {
+                    if (res.data.code == 200) {
+                        console.log(res.data)
+                        console.log(res.code)
+                        this.loading = false
+                        this.$message.success("邮件内容添加成功!")
+                        this.form = {}
+                        return
+                    }
+                    this.loading = false
+                }).catch(res => {
+                    this.loading = false
+                    this.$message.error("网络异常,请稍后重试!")
+                })
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spider.dao.MailDao">
+
+    <insert id="insert">
+        insert into tb_email (id,subtitle,content,create_time)
+        values (null,#{subtitle,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{date,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateStatus">
+        update tb_email set is_send = 1
+        where id in
+        <foreach collection="list" separator="," index="index" item="item" open="(" close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <select id="getEntityList" resultType="com.spider.mail.entity.MailEntity">
+        select * from tb_email where is_send = 0
+    </select>
+</mapper>
