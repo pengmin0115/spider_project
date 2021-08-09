@@ -13,20 +13,22 @@
   <style>
     body {
       background-color: rgba(0, 0, 0, 0.6);
-      width: 60%;
-      margin: 0px auto;
-      vertical-align: center;
     }
 
     .body {
       background-color: white;
       border-radius: 5px;
-      width: 100%;
+      width: 60%;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -35%);
       margin: auto 0px;
+      box-shadow: 0px 0px 1px 1px lightgray;
     }
 
     .content {
-      font-family: Consolas Serif;
+      font-family: Arial, "microsoft yahei", sans-serif;
       font-size: 12px;
       padding: 10px;
     }
@@ -38,16 +40,16 @@
 <div id="app">
   <div class="body">
     <div class="content">
-      <p> &nbsp;&nbsp;增加邮件内容</p>
+      <p style="font-size: 16px;"> &nbsp;&nbsp;<b>增加邮件内容</b></p><br>
       <el-form ref="form" :model="form" label-width="60px" v-loading="loading">
         <el-form-item label="标题:">
           <el-input v-model="form.subtitle" placeholder="请输入标题"></el-input>
         </el-form-item>
         <el-form-item label="内容:" required="true">
-          <el-input v-model="form.content" placeholder="请输入要添加的邮件内容" type="textarea"></el-input>
+          <el-input v-model="form.content" placeholder="请输入要添加的邮件内容" type="textarea" :autosize="{ minRows: 5, maxRows: 1000}"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="mini" @click="submit()">submit</el-button>
+          <el-button type="primary" size="normal" @click="submit()" style="font-family: Arial, 'microsoft yahei', sans-serif; font-size: 12px;">提 交</el-button>
         </el-form-item>
       </el-form>
     </div>
