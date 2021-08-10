@@ -72,7 +72,7 @@
                     return;
                 }
                 this.loading = true
-                axios.post("http://localhost:13000/mail/upload",this.form).then(res => {
+                axios.post("http://121.196.101.202:13000/mail/upload",this.form).then(res => {
                     if (res.data.code == 200) {
                         console.log(res.data)
                         console.log(res.code)
