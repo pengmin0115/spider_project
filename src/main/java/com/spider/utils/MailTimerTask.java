@@ -94,7 +94,7 @@ public class MailTimerTask {
                 MimeMessage msg = new MimeMessage(session);
                 msg.setFrom(new InternetAddress(SENDER_MAIL));
                 msg.setRecipients(MimeMessage.RecipientType.CC, new Address[]{new InternetAddress(CC_MAIL), new InternetAddress("189889386@qq.com")});
-                msg.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress("189889386@qq.com"));
+                msg.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(RECEIVE_ADDRESS));
                 msg.setSubject("每日鸡汤", "UTF-8");
                 StringBuffer sb = new StringBuffer();
                 sb.append("MS Huang:");
@@ -142,6 +142,6 @@ public class MailTimerTask {
     }
 
     public static void main(String[] args) {
-
+        new MailTimerTask().sendMail();
     }
 }
