@@ -1,5 +1,5 @@
 server:
-  port: 13000
+  port: 13001
 spring:
   datasource:
     url: jdbc:mysql://121.196.101.202:3306/web_project?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
