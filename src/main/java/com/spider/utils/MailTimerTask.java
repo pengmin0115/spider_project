@@ -59,6 +59,7 @@ public class MailTimerTask {
     private MailDao mailDao;
 
     @Scheduled(cron = "0 0 6 * * ?")
+    // @Scheduled(cron = "0 0/1 * * * ?")
     public void sendMail() {
         try {
             HttpURLConnection urlConnection = (HttpURLConnection) new URL(URL).openConnection();
@@ -102,7 +103,6 @@ public class MailTimerTask {
                 sb.append("&nbsp;&nbsp;" + content);
                 sb.append("</br>");
                 sb.append("(" + note + ")");
-
                 // 插入自定义的邮件内容;
                 List<MailEntity> mailEntityList = mailDao.getEntityList();
                 Integer titleCount = 1;
@@ -114,7 +114,6 @@ public class MailTimerTask {
                         sb.append(mailEntity.getContent());
                     }
                 }
-
                 sb.append("</br>");
                 sb.append("<img src='" + jsonObject.get("picture").toString() + "'>");
                 sb.append("</br>");

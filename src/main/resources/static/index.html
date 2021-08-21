@@ -40,7 +40,7 @@
 <div id="app">
   <div class="body">
     <div class="content">
-      <p style="font-size: 16px;"> &nbsp;&nbsp;<b>增加邮件内容</b></p><br>
+      <p style="font-size: 16px;"> &nbsp;&nbsp;<b>邮件内容</b></p><br>
       <el-form ref="form" :model="form" label-width="60px" v-loading="loading">
         <el-form-item label="标题:">
           <el-input v-model="form.subtitle" placeholder="请输入标题"></el-input>
@@ -72,7 +72,7 @@
                     return;
                 }
                 this.loading = true
-                axios.post("http://121.196.101.202/mail/mail/upload",this.form).then(res => {
+                axios.post("http://160.119.69.167:13000/mail/upload",this.form).then(res => {
                     if (res.data.code == 200) {
                         console.log(res.data)
                         console.log(res.code)
@@ -84,7 +84,7 @@
                     this.loading = false
                 }).catch(res => {
                     this.loading = false
-                    this.$message.error("网络异常,请稍后重试!")
+                    this.$message.error(res)
                 })
             }
         }
