@@ -11,18 +11,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author pengmin
  * @date 2021/3/31 21:29
  */
 @RestController
+@SuppressWarnings("all")
 public class JsoupController {
 
     @Autowired
@@ -74,6 +79,24 @@ public class JsoupController {
     private static final int THREAD_COUNT_TEST = 2;
     private static final int PAGE_RANGE_SIZE_TEST = 1;
     private static final int THREAD_TO_URL_PARAMS_TEST = 10;
+
+    public static final List<String> IP_LIST = new ArrayList<>();
+
+    public static final AtomicInteger IP_INDEX = new AtomicInteger(0);
+
+    @PostConstruct
+    public void init() throws IOException {
+        System.out.println("初始化IP列表");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(JsoupController.class.getClassLoader().getResourceAsStream("ip.txt")));
+        String line = "";
+        while ((line = reader.readLine())!= null) {
+            IP_LIST.add(line.trim());
+        }
+        System.out.println("初始化IP列表完成, size:" + IP_LIST.size());
+        for (int i = 0; i < IP_LIST.size(); i++) {
+            System.out.println((i + 1) + ":" + IP_LIST.get(i));
+        }
+    }
 
     @RequestMapping("/export")
     public String export(){
@@ -358,7 +381,6 @@ public class JsoupController {
                 break;
             }
         }
-//        System.out.println("["+new Date()+"] 获取到用户信息: " + userInfo.toString());
         return userInfo;
     }
 
@@ -379,24 +401,36 @@ public class JsoupController {
                 SecureRandom secureRandom = new SecureRandom();
                 int i = secureRandom.nextInt(5);
                 Thread.sleep(i * 1000);
+                String PROXY_ADDRESS = IP_LIST.get(IP_INDEX.get());
+                String[] ip_array = PROXY_ADDRESS.split(":");
                 Connection connection = Jsoup.connect(url)
-                        .userAgent("\"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31\"")
+//                        .proxy(ip_array[0], Integer.parseInt(ip_array[1]))
+//                        .userAgent("\"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31\"")
                         .timeout(timeout)
                         .followRedirects(true);
-//                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0")
-//                    .ignoreHttpErrors(true).followRedirects(true).ignoreContentType(true);
+//                connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+//                connection.header("Accept-Encoding", "gzip, deflate, sdch");
+//                connection.header("Accept-Language", "zh-CN,zh;q=0.8");
+                connection.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
+//                connection.header("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36");
                 Connection.Response execute = connection.execute();
                 if (execute.statusCode() == 200) {
                     html = execute.body();
                     break;
-                }
-                if (execute.statusCode() == 503) {
-                    System.out.println("[" + FORMATTER.format(new Date()) + "] " + Thread.currentThread() + "出现网络异常,手动让线程休眠10S..");
+                } else {
+                    /*if (IP_INDEX.get() == IP_LIST.size() - 1) {
+                        System.out.println("ip资源已用完, 重置遍历索引...");
+                        IP_INDEX.set(0);
+                    } else {
+                        IP_INDEX.incrementAndGet();
+                    }
+                    System.out.println("503错误更换代理IP, ip index:" + IP_INDEX.get());*/
+                    Thread.sleep(i * 1000);
                     System.out.println("[" + FORMATTER.format(new Date()) + "] " + Thread.currentThread() + "retry: " + (j + 1));
                     continue;
                 }
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return html;
