@@ -8,3 +8,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: spider_project
+
+# rocketMQ配置
+rocketmq:
+  name-server: 120.25.218.185:9876
+  producer:
+    group: pengmin
+    topic: MES_ERC_SRC_STATUS
+  consumer:
+    group: pengmin
+    topic: MES_ERC_SRC_STATUS
