@@ -2,6 +2,9 @@ package com.spider.controller;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,26 +21,23 @@ public class MessageProducer {
     @Resource
     private RocketMQTemplate rocketMQTemplate;
 
-    @Value("${rocketmq.producer.topic}")
+    @Value("${rocketmq.producer.src.topic}")
     private String topic;
 
     public void sendMessage(UpdateStatusMessage message) {
 
-        ReplyMsg resp = rocketMQTemplate.sendAndReceive(topic, message, ReplyMsg.class, 20 * 1000);
-
-        log.info("producer received response: {}", JSON.toJSONString(resp));
-
-        /*rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
+        rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
-                log.info("send message success");
+                log.info("send message success: {}", JSON.toJSONString(message));
             }
 
             @Override
             public void onException(Throwable e) {
-                log.info("send message error: ", e);
+                log.info("send message failed: {}", JSON.toJSONString(message));
             }
-        });*/
+        });
+
     }
 
 }

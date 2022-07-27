@@ -14,7 +14,14 @@ rocketmq:
   name-server: 120.25.218.185:9876
   producer:
     group: pengmin
-    topic: MES_ERC_SRC_STATUS
+    src:
+      group: pengmin
+      topic: MES_ERC_SRC_STATUS
   consumer:
     group: pengmin
     topic: MES_ERC_SRC_STATUS
+    src:
+      group: pengmin
+      topic: MES_ERC_SRC_STATUS
+
+debug: true
